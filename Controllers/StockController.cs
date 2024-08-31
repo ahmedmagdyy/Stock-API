@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Todo.data;
+using Todo.Mappers;
 using Todo.Models;
 
 namespace Todo.Controllers
@@ -21,7 +22,7 @@ namespace Todo.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<Stock>> GetAll()
         {
-            var stocks = _context.Stocks.ToList();
+            var stocks = _context.Stocks.ToList().Select(s => s.MapToDTO());
             return Ok(stocks);
         }
 
@@ -33,7 +34,7 @@ namespace Todo.Controllers
             {
                 return NotFound();
             }
-            return Ok(stock);
+            return Ok(stock.MapToDTO());
         }
     }
 }
